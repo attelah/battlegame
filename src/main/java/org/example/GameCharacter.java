@@ -3,13 +3,13 @@ package org.example;
 abstract class GameCharacter {
     public String name;
     public int hitPoints;
-    private String equippedWeapon = "Fists";
+    private Weapon equippedWeapon;
     double dexterity;
     GameCharacter defender;
-    double damageRange;
-    double getWeaponDamage;
+    int damageAmount;
 
-    public GameCharacter(String name, int hitPoints, String equippedWeapon) {
+
+    public GameCharacter(String name, int hitPoints, Weapon equippedWeapon) {
         this.name = name;
         this.hitPoints = hitPoints;
         this.equippedWeapon = equippedWeapon;
@@ -19,23 +19,22 @@ abstract class GameCharacter {
     public int takeDamage(int damage) {
         this.hitPoints -= damage;
         if (this.hitPoints < 0) this.hitPoints = 0;
-        return this.hitPoints;
+        return damage;
     }
 
     public double attack(GameCharacter defender) {
         this.defender = defender;
-        damageRange = defender.takeDamage(getEquippedWeapon().getWeaponDamage());
-        return getDamage(damageRange);
+        return damageAmount = defender.takeDamage((int) (getEquippedWeapon().getDamage()*getDexterity()));
     }
 
     protected GameCharacter() {
     }
 
-    public String getEquippedWeapon() {
+    public Weapon getEquippedWeapon() {
         return equippedWeapon;
     }
 
-    public void setEquippedWeapon(String equippedWeapon) {
+    public void setEquippedWeapon(Weapon equippedWeapon) {
         this.equippedWeapon = equippedWeapon;
     }
 

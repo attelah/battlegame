@@ -5,11 +5,11 @@ import java.util.Random;
 public class Weapon {
     private String name;
     private int damage;
-    Random rndm = new Random();
+    Random rnd = new Random();
 
     public Weapon(String name, int damage) {
         this.name = name;
-        this.damage = rndm.nextInt(damage)+8;
+        this.damage = rnd.nextInt(damage)+8;
     }
 
     public String getName() {
