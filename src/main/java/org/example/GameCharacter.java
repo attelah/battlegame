@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Random;
+
 abstract class GameCharacter {
     public String name;
     public int hitPoints;
@@ -7,6 +9,7 @@ abstract class GameCharacter {
     double dexterity;
     GameCharacter defender;
     int damageAmount;
+    int critHit;
 
 
     public GameCharacter(String name, int hitPoints, Weapon equippedWeapon) {
@@ -22,9 +25,11 @@ abstract class GameCharacter {
         return damage;
     }
 
-    public double attack(GameCharacter defender) {
+    public double attack(GameCharacter defender, int critHit) {
+        Random rnd = new Random();
         this.defender = defender;
-        return damageAmount = defender.takeDamage((int) (getEquippedWeapon().getDamage()*getDexterity()));
+        this.critHit = critHit;
+            return damageAmount = defender.takeDamage((int) (getEquippedWeapon().getDamage() * getDexterity() + critHit + rnd.nextInt(3)));
     }
 
     protected GameCharacter() {
@@ -42,7 +47,9 @@ abstract class GameCharacter {
         return name;
     }
 
-    public double getHitPoints() { return hitPoints; }
+    public double getHitPoints() {
+        return hitPoints;
+    }
 
     public double getDexterity() {
         return dexterity;
@@ -50,5 +57,9 @@ abstract class GameCharacter {
 
     public void setDexterity(double dexterity) {
         this.dexterity = dexterity;
+    }
+
+    public void setHitPoints(int hitPoints) {
+        this.hitPoints = hitPoints;
     }
 }

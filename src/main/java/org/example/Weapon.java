@@ -9,7 +9,7 @@ public class Weapon {
 
     public Weapon(String name, int damage) {
         this.name = name;
-        this.damage = rnd.nextInt(damage)+8;
+        this.damage = rnd.nextInt(damage) + 4;
     }
 
     public String getName() {
