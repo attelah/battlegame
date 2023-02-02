@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 abstract class GameCharacter {
@@ -10,7 +11,9 @@ abstract class GameCharacter {
     GameCharacter defender;
     int damageAmount;
     int critHit;
+    Random rnd = new Random();
 
+    public ArrayList<Weapon> inventory = new ArrayList<>();
 
     public GameCharacter(String name, int hitPoints, Weapon equippedWeapon) {
         this.name = name;
@@ -26,10 +29,17 @@ abstract class GameCharacter {
     }
 
     public double attack(GameCharacter defender, int critHit) {
-        Random rnd = new Random();
         this.defender = defender;
         this.critHit = critHit;
             return damageAmount = defender.takeDamage((int) (getEquippedWeapon().getDamage() * getDexterity() + critHit + rnd.nextInt(3)));
+    }
+
+    public int Heal() {
+        Random rnd = new Random();
+        int healAmount = rnd.nextInt(60)+(int) this.getHitPoints();
+        if (healAmount > 100) healAmount = 100;
+        this.setHitPoints(healAmount);
+        return (int) this.getHitPoints();
     }
 
     protected GameCharacter() {
@@ -55,11 +65,15 @@ abstract class GameCharacter {
         return dexterity;
     }
 
-    public void setDexterity(double dexterity) {
-        this.dexterity = dexterity;
-    }
-
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
+    }
+
+    public ArrayList<Weapon> getInventory() {
+        return inventory;
+    }
+
+    public void addInventory(Weapon weapon) {
+        inventory.add(weapon);
     }
 }

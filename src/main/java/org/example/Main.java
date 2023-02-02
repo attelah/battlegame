@@ -20,11 +20,10 @@ public class Main {
             System.out.println("Who is this brave man? What is your name?");
 
             // Generate the characters and weapons
-            // TODO Generate characters and weapons randomly
-            Weapon chainsaw = new Weapon("Chainsaw", 20);
-            Weapon slimeBomb = new Weapon("Slime bomb", 16);
+            Weapon chainsaw = new Weapon("Chainsaw", 18);
             GameCharacter player = new Player(input.nextLine(), 100, 0.8, chainsaw);
-            GameCharacter npc = new Npc("Snail", 100, 0.5, slimeBomb);
+            player.addInventory(chainsaw);
+            GameCharacter npc = Npc.spawnNpc();
 
             // Prints out the players info
             System.out.printf("%s\nX============================== YOU ==============================X\n%s", Colors.ANSI_BLUE, Colors.ANSI_RESET);
@@ -72,6 +71,12 @@ public class Main {
                     //Ask what the player wants to do in between of the attacks
                     if (turn == 3) {
                         turn = 1;
+                        player.addInventory(player.getEquippedWeapon());
+                        // TODO PICK WEAPON FROM INVENTORY
+                        // TODO REMOVE WEAPON FROM INVENTORY
+                        player.getInventory().forEach(weapon -> {
+                            System.out.println(weapon.getName());
+                        });
                         System.out.printf("\nAttack %s(Enter)%s Flee %s(q)%s\n", Colors.ANSI_GREEN, Colors.ANSI_RESET, Colors.ANSI_RED, Colors.ANSI_RESET);
                         if (input.nextLine().equals("q")) {
                             playing = false;
@@ -105,15 +110,14 @@ public class Main {
                 if (npcDied) {
                     System.out.printf("\n%s%s was defeated!%s\n\n", Colors.ANSI_GREEN, npc.getName(), Colors.ANSI_RESET);
                     System.out.printf("%sX=================================================================X\n%s", Colors.ANSI_BLUE, Colors.ANSI_RESET);
-                    // TODO Generate next random opponent
+                    System.out.printf("\nYou patch up your wounds, you now have %s%s%s HP!\n", Colors.ANSI_GREEN, player.Heal(), Colors.ANSI_RESET);
                     System.out.printf("\nContinue walking forward %s(Enter)%s or Flee %s(q)%s\n", Colors.ANSI_GREEN, Colors.ANSI_RESET, Colors.ANSI_RED, Colors.ANSI_RESET);
                     if (input.nextLine().equals("q")) {
                         playing = false;
                         System.out.println("\nYou ran away!\n");
                     }
                     turn = 0;
-                    player.setHitPoints(100);
-                    npc.setHitPoints(100);
+                    npc = Npc.spawnNpc();
                     npcDied = false;
                 }
             }
