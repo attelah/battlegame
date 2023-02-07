@@ -33,7 +33,7 @@ public class Main {
                 System.out.println("Started a new save.\n");
                 // Generate the characters and weapons
                 System.out.println("Who is this brave man? What is your name?");
-                Weapon chainsaw = new Weapon("Chainsaw", 13);
+                Weapon chainsaw = new Weapon("Chainsaw", 18);
                 player = new Player(input.nextLine(), 100, 0.8, chainsaw);
                 player.addInventory(player.getEquippedWeapon());
             }
@@ -58,7 +58,7 @@ public class Main {
             fightLoop:
             while (playing && !playerDied) {
                 System.out.printf("%sX============================ %sROUND %s%s ============================X%s\n", Colors.ANSI_BLUE, Colors.ANSI_CYAN, player.getRound(), Colors.ANSI_BLUE, Colors.ANSI_RESET);
-                System.out.printf("\nA scary %s%s%s appears in front of you!\n", Colors.ANSI_RED, npc.getName(), Colors.ANSI_RESET);
+                System.out.printf("\nA scary %s%s%s %s(%,.0f)%s appears in front of you!\n", Colors.ANSI_RED, npc.getName(), Colors.ANSI_RESET, Colors.ANSI_GREEN, npc.getHitPoints(), Colors.ANSI_RESET);
 
                 while (player.getHitPoints() > 0 && npc.getHitPoints() > 0) {
                     // Count the turns
@@ -137,10 +137,10 @@ public class Main {
                             for (int i = 0; i < player.getInventory().size(); i++) {
                                 System.out.printf("%s - %s%s%s (%s%s%s)\n", i + 1, Colors.ANSI_PURPLE, player.getInventory().get(i).getName(), Colors.ANSI_RESET, Colors.ANSI_RED, player.getInventory().get(i).getDamage(), Colors.ANSI_RESET);
                             }
-                            System.out.printf("\n%sYour inventory is full!%s Select a weapon to drop %s(1-%s)%s", Colors.ANSI_RED, Colors.ANSI_RESET, Colors.ANSI_GREEN, player.getInventory().size(), Colors.ANSI_RESET);
+                            System.out.printf("\n%sYour inventory is full!%s Select a weapon to drop %s(1-%s)%s\n", Colors.ANSI_RED, Colors.ANSI_RESET, Colors.ANSI_GREEN, player.getInventory().size(), Colors.ANSI_RESET);
                             Boolean valid = false;
                             while (!valid) {
-                                String choice = input.next();
+                                String choice = input.nextLine();
                                 try {
                                     Integer.parseInt(choice);
                                     System.out.printf("\nYou threw away a %s", player.getInventory().get(Integer.parseInt(choice) - 1).getName());
