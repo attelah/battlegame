@@ -1,9 +1,10 @@
 package org.example;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-abstract class GameCharacter {
+abstract class GameCharacter implements Serializable {
     public String name;
     public int hitPoints;
     private Weapon equippedWeapon;
@@ -12,6 +13,7 @@ abstract class GameCharacter {
     int damageAmount;
     int critHit;
     Random rnd = new Random();
+    int round = 1;
 
     public ArrayList<Weapon> inventory = new ArrayList<>();
 
@@ -19,7 +21,6 @@ abstract class GameCharacter {
         this.name = name;
         this.hitPoints = hitPoints;
         this.equippedWeapon = equippedWeapon;
-        this.dexterity = dexterity;
     }
 
     public int takeDamage(int damage) {
@@ -31,12 +32,12 @@ abstract class GameCharacter {
     public double attack(GameCharacter defender, int critHit) {
         this.defender = defender;
         this.critHit = critHit;
-            return damageAmount = defender.takeDamage((int) (getEquippedWeapon().getDamage() * getDexterity() + critHit + rnd.nextInt(3)));
+        return damageAmount = defender.takeDamage((int) (getEquippedWeapon().getDamage() * getDexterity() + critHit + rnd.nextInt(3)));
     }
 
-    public int Heal() {
+    public int heal() {
         Random rnd = new Random();
-        int healAmount = rnd.nextInt(60)+(int) this.getHitPoints();
+        int healAmount = rnd.nextInt(60) + (int) this.getHitPoints();
         if (healAmount > 100) healAmount = 100;
         this.setHitPoints(healAmount);
         return (int) this.getHitPoints();
@@ -75,5 +76,21 @@ abstract class GameCharacter {
 
     public void addInventory(Weapon weapon) {
         inventory.add(weapon);
+    }
+
+    public void removeInventory(Weapon weapon) {
+        inventory.remove(weapon);
+    }
+
+    public void addRound() {
+        this.round++;
+    }
+
+    public int getRound() {
+        return this.round;
+    }
+
+    public void resetRounds() {
+        this.round = 0;
     }
 }

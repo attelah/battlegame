@@ -1,8 +1,9 @@
 package org.example;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Weapon {
+public class Weapon implements Serializable {
     private String name;
     private int damage;
     Random rnd = new Random();
@@ -16,15 +17,8 @@ public class Weapon {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
 }
